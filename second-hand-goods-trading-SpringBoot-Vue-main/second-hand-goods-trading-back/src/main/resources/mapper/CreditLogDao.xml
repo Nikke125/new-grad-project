@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.second.hand.trading.server.dao.CreditLogDao">
+
+    <insert id="insert" parameterType="com.second.hand.trading.server.model.CreditLogModel" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sh_credit_log (user_id, change_type, change_score, reason, create_time)
+        VALUES (#{userId}, #{changeType}, #{changeScore}, #{reason}, #{createTime})
+    </insert>
+
+</mapper>

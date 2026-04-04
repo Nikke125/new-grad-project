@@ -1,0 +1,73 @@
+<view class="container">
+  <!-- 用户信息卡片 -->
+  <view class="user-card">
+    <view class="user-info-box">
+      <view class="avatar-box">
+        <image class="avatar" bindtap="{{userinfo ? 'chooseImage' : ''}}" src="{{userinfo ? userinfo.avatar : '/images/avator.png'}}" mode="aspectFill"></image>
+      </view>
+      <view class="info-text">
+        <block wx:if="{{!userinfo}}">
+          <view class="nickname login-text" bindtap="go" data-go="/pages/login/quickLogin/quickLogin">点击登录</view>
+          <view class="subtitle">一秒登录，体验所有功能</view>
+        </block>
+        <block wx:else>
+          <view class="nickname-row">
+            <text class="nickname">{{userinfo.nickname}}</text>
+            <view wx:if="{{userinfo.userType == 2}}" class="admin-tag" bindtap="go" data-go="/pages/shelf/shelf" data-status="1">
+              <image src="/images/weixin_2.png"></image>
+            </view>
+          </view>
+          <view class="subtitle" bindtap="go" data-go="/pages/edit/edit" data-status="1">点击修改资料</view>
+        </block>
+      </view>
+    </view>
+  </view>
+
+  <!-- 交易中心宫格卡片 -->
+  <view class="trading-card">
+    <view class="card-title">交易中心</view>
+    <view class="grid-box">
+      <view class="grid-item" bindtap="go" data-go="/pages/sell/list/list" data-status="1">
+        <image src="/images/history.png"></image>
+        <text>我发布的闲置</text>
+      </view>
+      <view class="grid-item" bindtap="go" data-go="/pages/order/list/list" data-status="1">
+        <image src="/images/publish.png"></image>
+        <text>我的购买</text>
+      </view>
+      <view class="grid-item" bindtap="go" data-go="/pages/collect/collect" data-status="1">
+        <image src="/images/collect.png"></image>
+        <text>我的收藏</text>
+      </view>
+      <view class="grid-item" bindtap="goo" data-go="/pages/help/help">
+        <image src="/images/help.png"></image>
+        <text>消息中心</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部功能列表 -->
+  <view class="list-section">
+    <view class="list-item" bindtap="go" data-go="/pages/appreciateCode/appreciateCode" data-status="1">
+      <view class="item-left">
+        <image src="/images/appreciate.png"></image>
+        <text>上传赞赏码</text>
+      </view>
+      <image class="arrow" src="/images/go.png"></image>
+    </view>
+    <view class="list-item" bindtap="editAddress">
+      <view class="item-left">
+        <image src="/images/editAddress.png"></image>
+        <text>编辑地址</text>
+      </view>
+      <image class="arrow" src="/images/go.png"></image>
+    </view>
+    <view class="list-item" bindtap="logout">
+      <view class="item-left">
+        <image src="/images/logout.png"></image>
+        <text>退出登录</text>
+      </view>
+      <image class="arrow" src="/images/go.png"></image>
+    </view>
+  </view>
+</view>

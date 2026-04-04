@@ -1,0 +1,117 @@
+<wxs src="../../common.wxs" module="morejs" />
+
+<!-- 顶部搜索栏区域，毛玻璃质感 -->
+<view class="top_header_blur_background">
+  <view class="top_box">
+    <view class="search_box" bindtap="search">
+      <image class="search_ico" src="/images/search.png"></image>
+      <view class="search_text">搜索想要的物品，例如：杯子</view>
+    </view>
+    <image bindtap="changeCard" class="top_list" src="{{iscard?'/images/list.png':'/images/card.png'}}"></image>
+  </view>
+</view>
+
+<!-- 横幅 -->
+<van-notice-bar left-icon="volume-o" text="{{indexTip}}" speed="50" />
+<swiper class="banner" indicator-dots autoplay indicator-active-color="#6AFFD9" circular>
+  <block wx:for="{{banner}}" wx:key="id">
+    <swiper-item>
+      <image lazy-load src="{{item.pictureList}}" bindtap="goweb" data-banner="{{item}}" class="banner_image" mode="aspectFill" />
+    </swiper-item>
+  </block>
+</swiper>
+<view class="space"></view>
+<official-account></official-account>
+
+<!-- 分类导航 - 游戏化菜单风格 -->
+<view class="kind_contain_fixed_wrapper {{scrollTop>310?'fixed':''}}">
+  <view class="kind_contain">
+    <view class="nav-item {{collegeCur === -2 ? 'tab-on' : ''}}" bindtap="selectAll">
+      <view class="nav-text">全部</view>
+    </view>
+    <scroll-view scroll-x class="nav" scroll-with-animation scroll-left="{{scrollLeft}}rpx">
+      <view class="nav-item" wx:for="{{college}}" wx:key="id" bindtap="collegeSelect" data-id="{{index}}">
+        <view class="nav-text {{index==collegeCur+1?'tab-on':''}}">{{item.name}}</view>
+      </view>
+    </scroll-view>
+    <view class="kind_img" bindtap="showlist">
+      <image lazy-load src="{{showList?'/images/l_down.png':'/images/l_right.png'}}" />
+    </view>
+    <view class="kindlist_box" wx:if="{{showList}}">
+      <view class="kindlist_card">
+        <view class="list_grid">
+          <block wx:for="{{college}}" wx:key="id">
+            <view class="list_one" bindtap="collegeSelect" data-id="{{index}}" data-class="{{item.id}}">
+              <view class="{{index==collegeCur+1?'list-on':''}}">{{item.name}}</view>
+            </view>
+          </block>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 宫格显示 -->
+<view hidden="{{!iscard}}" class="waterfall_container">
+  <view class="card_grid" wx:if="{{list.length>0}}">
+    <block wx:for="{{list}}" wx:key="_id">
+      <view class="card_one" bindtap="detail" data-id="{{item.id}}">
+        <image lazy-load class="card_poster" src="{{item.pictureList[0]}}" mode="widthFix"></image>
+        <view class="card_info">
+          <view class="card_title">{{item.idleName}}</view>
+          <view class="card_price_box">
+            <text class="price_symbol">￥</text>
+            <text class="price_value">{{item.idlePrice}}</text>
+          </view>
+          <view class="card_user">
+            <image lazy-load class="card_user_avatar" src="{{item.user.avatar}}"></image>
+            <text class="card_user_name">{{item.user.nickname}}</text>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>
+
+<!-- 列表显示 -->
+<view hidden="{{iscard}}">
+  <block wx:if="{{list.length>0}}">
+    <block wx:for="{{list}}" wx:key="id">
+      <view class="list_box" bindtap="detail" data-id="{{item.id}}">
+        <image lazy-load class="list_poster" src="{{item.pictureList[0]}}"></image>
+        <view class="list_content">
+          <view class="list_word">
+            <view class="list_title text-cut">{{item.idleName}}</view>
+            <view class="list_author text-cut">{{item.user.nickname}}</view>
+          </view>
+          <view class="list_between">
+            <view class="list_price">￥{{item.idlePrice}}元</view>
+            <view class="list_time">{{item.releaseTime}}发布</view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </block>
+</view>
+
+<!-- 空状态：阿初与小宝专属 IP 融入 -->
+<view class="nocontent" wx:if="{{list.length==0}}">
+  <image lazy-load class="nocontent_image" src="/images/your-custom-ip-image.png" mode="aspectFit"></image>
+  <view class="nocontent_title">阿初和小宝把这里翻遍了</view>
+  <view class="nocontent_subtitle">暂时还没看到宝贝哦～</view>
+</view>
+
+<block wx:if="{{list.length>10}}">
+  <import src="/common.wxml" />
+  <template is="loadmore" data="{{nomore}}" />
+</block>
+
+<van-transition show="{{ scrollTop>500 }}" custom-class="block" duration="600">
+  <view class="totop" bindtap="gotop">
+    <image lazy-load src="/images/top.png"></image>
+  </view>
+</van-transition>
+
+<view class="publish_fab" bindtap="publish" hover-class="publish_fab_hover">
+  <view class="plus_icon"></view>
+</view>

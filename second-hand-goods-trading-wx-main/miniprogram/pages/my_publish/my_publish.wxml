@@ -1,0 +1,81 @@
+<view class="container">
+  <!-- 顶部悬浮 Tab -->
+  <view class="tab-bar">
+    <view 
+      wx:for="{{tabs}}" 
+      wx:key="status" 
+      class="tab-item {{activeTab == index ? 'active' : ''}}" 
+      bindtap="onTabChange" 
+      data-index="{{index}}"
+    >
+      <text>{{item.name}}</text>
+      <view class="underline" wx:if="{{activeTab == index}}"></view>
+    </view>
+  </view>
+
+  <!-- 列表部分 -->
+  <scroll-view scroll-y class="list-view">
+    <block wx:if="{{list.length > 0}}">
+      <view class="product-card" wx:for="{{list}}" wx:key="id">
+        <view class="product-info">
+          <image class="cover" src="{{item.cover}}" mode="aspectFill"></image>
+          <view class="details">
+            <view class="title">{{item.title}}</view>
+            <view class="price-row">
+              <text class="symbol">¥</text>
+              <text class="price">{{item.price}}</text>
+              <view class="status-tag tag-{{item.status}}">{{item.statusText}}</view>
+            </view>
+            <view class="publish-time">发布于：{{item.createTime}}</view>
+          </view>
+        </view>
+
+        <!-- 操作栏 -->
+        <view class="action-bar">
+          <!-- 在售状态 -->
+          <block wx:if="{{item.status == 1}}">
+            <button 
+              class="ghost-btn danger" 
+              hover-class="btn-hover" 
+              bindtap="handleOffShelf" 
+              data-id="{{item.id}}"
+            >下架</button>
+            <button 
+              class="ghost-btn primary" 
+              hover-class="btn-hover" 
+              bindtap="handleEdit" 
+              data-id="{{item.id}}"
+            >编辑</button>
+          </block>
+          
+          <!-- 已下架状态 -->
+          <block wx:if="{{item.status == 2}}">
+            <button 
+              class="ghost-btn primary" 
+              hover-class="btn-hover" 
+              bindtap="handleOnShelf" 
+              data-id="{{item.id}}"
+            >重新上架</button>
+            <button 
+              class="ghost-btn" 
+              hover-class="btn-hover" 
+              bindtap="handleEdit" 
+              data-id="{{item.id}}"
+            >编辑</button>
+          </block>
+
+          <!-- 已卖出状态 -->
+          <block wx:if="{{item.status == 3}}">
+            <view class="sold-tips">该商品已成交</view>
+          </block>
+        </view>
+      </view>
+    </block>
+    
+    <!-- 空状态 -->
+    <view class="empty-box" wx:else>
+      <image src="/images/blank.png" mode="aspectFit"></image>
+      <text>暂无相关商品</text>
+    </view>
+  </scroll-view>
+</view>
