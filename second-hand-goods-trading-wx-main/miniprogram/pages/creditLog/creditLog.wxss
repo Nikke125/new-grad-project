@@ -1,0 +1,89 @@
+page {
+  background-color: #F7F8FA;
+}
+
+.container {
+  padding: 20rpx;
+}
+
+.current-score-card {
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 40rpx;
+  margin-bottom: 30rpx;
+  text-align: center;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.04);
+}
+
+.score-label {
+  font-size: 28rpx;
+  color: #888;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.current-score {
+  font-size: 72rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.log-list-container {
+  /* Timeline or card list base styling */
+}
+
+.log-item {
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.03);
+}
+
+.log-content {
+  flex: 1;
+}
+
+.log-reason {
+  font-size: 32rpx;
+  color: #333;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.log-time {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.log-change-score {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-left: 30rpx;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 0;
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.03);
+}
+
+.empty-image {
+  width: 200rpx;
+  height: 200rpx;
+  margin-bottom: 30rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+}
+

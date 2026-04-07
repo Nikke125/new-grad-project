@@ -13,6 +13,13 @@
         <block wx:else>
           <view class="nickname-row">
             <text class="nickname">{{userinfo.nickname}}</text>
+            <!-- 信誉积分徽章 -->
+        <view class="credit-badge badge-s" wx:if="{{userinfo.creditScore >= 110}}" bindtap="go" data-go="/pages/creditLog/creditLog?uid={{userinfo.id}}&score={{userinfo.creditScore}}">S级 | 极好</view>
+
+<view class="credit-badge badge-a" wx:elif="{{userinfo.creditScore >= 90 || !userinfo.creditScore}}" bindtap="go" data-go="/pages/creditLog/creditLog?uid={{userinfo.id}}&score={{userinfo.creditScore}}">A级 | 良好</view>
+
+<view class="credit-badge badge-c" wx:else bindtap="go" data-go="/pages/creditLog/creditLog?uid={{userinfo.id}}&score={{userinfo.creditScore}}">信用待提升</view>
+
             <view wx:if="{{userinfo.userType == 2}}" class="admin-tag" bindtap="go" data-go="/pages/shelf/shelf" data-status="1">
               <image src="/images/weixin_2.png"></image>
             </view>

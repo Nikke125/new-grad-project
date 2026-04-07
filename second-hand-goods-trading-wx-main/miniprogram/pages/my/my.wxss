@@ -58,7 +58,41 @@ page {
 
 .nickname-row {
   display: flex;
+  flex-direction: row;
   align-items: center;
+  margin-bottom: 8rpx;
+}
+
+/* 信誉徽章样式 */
+.credit-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 20rpx;
+  font-weight: 600;
+  margin-left: 16rpx;
+  white-space: nowrap;
+  letter-spacing: 1rpx;
+}
+
+.badge-s {
+  background: linear-gradient(135deg, #FDE08D 0%, #E6B139 100%);
+  color: #7D5100;
+  box-shadow: 0 4rpx 12rpx rgba(230, 177, 57, 0.4);
+  border: 1rpx solid rgba(255, 255, 255, 0.5);
+}
+
+.badge-a {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  color: #fff;
+  box-shadow: 0 4rpx 12rpx rgba(67, 233, 123, 0.2);
+}
+
+.badge-c {
+  background: #EAEAEA;
+  color: #999;
+  font-weight: normal;
 }
 
 .admin-tag {

@@ -1,0 +1,27 @@
+<view class="container">
+  <!-- Current Score Display -->
+  <view class="current-score-card">
+    <text class="score-label">当前信誉积分</text>
+    <text class="current-score">{{currentScore}}</text>
+  </view>
+
+  <!-- Credit Log List -->
+  <view class="log-list-container">
+    <block wx:if="{{!isEmpty}}">
+      <view wx:for="{{logList}}" wx:key="id" class="log-item">
+        <view class="log-content">
+          <text class="log-reason">{{item.reason}}</text>
+          <text class="log-time">{{item.createTimeFormatted}}</text>
+        </view>
+        <text class="log-change-score" style="color: {{item.changeScoreColor}};">{{item.changeScoreDisplay}}</text>
+      </view>
+    </block>
+    <block wx:else>
+      <!-- Empty State -->
+      <view class="empty-state">
+        <image src="/images/blank.png" class="empty-image"></image> <!-- Adjust path if needed -->
+        <text class="empty-text">暂无信誉积分明细</text>
+      </view>
+    </block>
+  </view>
+</view>

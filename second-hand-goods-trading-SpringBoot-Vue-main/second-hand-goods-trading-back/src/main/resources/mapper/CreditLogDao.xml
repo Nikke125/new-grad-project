@@ -7,4 +7,11 @@
         VALUES (#{userId}, #{changeType}, #{changeScore}, #{reason}, #{createTime})
     </insert>
 
+    <select id="selectByUserId" resultType="com.second.hand.trading.server.model.CreditLogModel">
+        SELECT id, user_id, change_type, change_score, reason, create_time
+        FROM sh_credit_log
+        WHERE user_id = #{userId}
+        ORDER BY create_time DESC
+    </select>
+
 </mapper>

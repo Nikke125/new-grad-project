@@ -27,7 +27,8 @@
     "pages/register/register",
     "pages/addressList/addressList",
     "pages/address/address",
-    "pages/login/quickLogin/quickLogin"
+    "pages/login/quickLogin/quickLogin",
+    "pages/creditLog/creditLog"
   ],
   "window": {
     "backgroundColor": "#fbbd08",
