@@ -18,5 +18,13 @@ public interface UserWXService {
      */
     public UserModel getWeChatUser(UserModel userModel);
 
+    /**
+     * 微信一键登录，处理获取openid、用户注册/登录、生成token等所有逻辑
+     * @param code 微信登录凭证
+     * @return 包含用户信息的UserModel及JWT token
+     * @throws Exception
+     */
+    public UserModel wxLogin(String code) throws Exception;
+
 
 }

@@ -21,7 +21,7 @@ import static com.second.hand.trading.server.enums.ErrorMsg.FAIL_WX_TOKEN;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/wxuser")
+@RequestMapping("/user/wx")
 public class UserWXController {
     @Autowired
     private UserWXService userWXService;
@@ -29,37 +29,31 @@ public class UserWXController {
     private UserService userService;
     /**
      * 微信登录
-     * @param userModel
      * @return
      */
-    @PostMapping("/wxlogin")
-    public ResultVo login(@RequestBody UserModel userModel,
+    @PostMapping("/login")
+    public ResultVo wxLogin(@RequestBody Map<String, String> requestBody,
                             HttpServletResponse response){
-        System.out.println("userModel" + userModel);
-//        System.out.println("userModel.getWxOpenid()" + userModel.getWxOpenid());
-        userModel.setSignInTime(new Timestamp(System.currentTimeMillis()));
-        if (userModel.getAvatar() == null || "".equals(userModel.getAvatar())) {
-            userModel.setAvatar("https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png");
-        }
-        try {
-            String openid = userWXService.getWeChatOpenId(userModel.getCode());
-            userModel.setWxOpenid(openid);
-            UserModel userModel_ = userWXService.getWeChatUser(userModel);
-            // 3. 生成JWT Token
-            String token = JWTUtils.generateToken(openid);
-            System.out.println("userModel_:"+userModel_);
-            userModel_.setToken(token);
-            Cookie cookie = new Cookie("shUserId", String.valueOf(userModel_.getId()));
-//        cookie.setMaxAge(60 * 60 * 24 * 30);
-            cookie.setPath("/");
-            cookie.setHttpOnly(false);
-            response.addCookie(cookie);
-            return ResultVo.success(userModel_);
-        } catch (Exception e) {
-            e.printStackTrace();
+        String code = requestBody.get("code");
+        if (code == null || code.isEmpty()) {
+            return ResultVo.fail("Code cannot be empty");
         }
 
-        return ResultVo.fail(FAIL_WX_TOKEN);
+        try {
+            UserModel userModelWithToken = userWXService.wxLogin(code);
+            
+            // Set cookie for user ID, assuming userModelWithToken contains the ID
+            if (userModelWithToken != null && userModelWithToken.getId() != null) {
+                Cookie cookie = new Cookie("shUserId", String.valueOf(userModelWithToken.getId()));
+                cookie.setPath("/");
+                cookie.setHttpOnly(false); // Adjust based on security requirements
+                response.addCookie(cookie);
+            }
+            return ResultVo.success(userModelWithToken);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultVo.fail(FAIL_WX_TOKEN.getMsg() + ": " + e.getMessage());
+        }
     }
 
 }

@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.second.hand.trading.server.dao.UserWXDao;
 import com.second.hand.trading.server.model.UserModel;
 import com.second.hand.trading.server.service.UserWXService;
+import com.second.hand.trading.server.utils.JWTUtils;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 @Service
@@ -61,5 +63,37 @@ public class UserWXServiceImpl implements UserWXService {
         return userModel_;
     }
 
+    @Override
+    public UserModel wxLogin(String code) throws Exception {
+        // 1. 获取openid
+        String openid = getWeChatOpenId(code);
+        if (openid == null || openid.isEmpty()) {
+            throw new RuntimeException("Failed to get openid from WeChat.");
+        }
+
+        // 2. 根据openid查询或注册用户
+        UserModel user = userWXDao.getWXUserToOpenid(openid);
+
+        if (user == null) {
+            // 新用户注册
+            user = new UserModel();
+            user.setWxOpenid(openid);
+            user.setAvatar("https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"); // 默认头像
+            user.setNickname("微信用户_" + openid.substring(0, 8)); // 默认昵称
+            user.setSignInTime(new Timestamp(System.currentTimeMillis()));
+            userWXDao.insertWXUser(user);
+            user = userWXDao.getWXUserToOpenid(openid); // 重新获取包含ID的用户信息
+        } else {
+            // 已有用户，更新登录时间
+            user.setSignInTime(new Timestamp(System.currentTimeMillis()));
+            userWXDao.updateWXUser(user);
+        }
+
+        // 3. 生成JWT Token
+        String token = JWTUtils.generateToken(openid);
+        user.setToken(token);
+
+        return user;
+    }
 
 }
