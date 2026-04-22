@@ -13,10 +13,10 @@
 
 <!-- 横幅 -->
 <van-notice-bar left-icon="volume-o" text="{{indexTip}}" speed="50" />
-<swiper class="banner" indicator-dots autoplay indicator-active-color="#6AFFD9" circular>
-  <block wx:for="{{banner}}" wx:key="id">
+<swiper class="banner" indicator-dots autoplay indicator-active-color="#6AFFD9" circular interval="5000" duration="500">
+  <block wx:for="{{bannerList}}" wx:key="id">
     <swiper-item>
-      <image lazy-load src="{{item.pictureList}}" bindtap="goweb" data-banner="{{item}}" class="banner_image" mode="aspectFill" />
+      <image lazy-load src="{{item.imageUrl}}" bindtap="goweb" data-banner="{{item}}" class="banner_image" mode="aspectFill" />
     </swiper-item>
   </block>
 </swiper>

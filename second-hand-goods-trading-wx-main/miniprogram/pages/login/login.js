@@ -128,13 +128,65 @@ Page({
           
         }catch(e){
           console.error(e);
-        }
-        
-        
-      },
-        //获取授权的点击事件
-        shouquan() {
-            wx.requestSubscribeMessage({
+          }
+
+
+          },
+          async wxLogin() {
+          let that = this;
+          wx.login({
+                success: async res => {
+                      if (res.code) {
+                            try {
+                                  that.showLoading("正在登录", "网络错误", 3000);
+                                  const loginRes = await request('/user/wx/login', {
+                                        code: res.code
+                                  }, 'POST');
+                                  wx.hideLoading();
+                                  if (loginRes.status_code == 1) {
+                                        wx.setStorageSync('token', loginRes.data.token);
+                                        app.openid = loginRes.data.id;
+                                        app.userinfo = loginRes.data;
+                                        wx.showToast({
+                                              title: '微信登录成功',
+                                              icon: 'success',
+                                        });
+                                        wx.navigateBack({
+                                              delta: app.deltaNum
+                                        });
+                                  } else {
+                                        wx.showToast({
+                                              title: loginRes.msg,
+                                              icon: 'none',
+                                        });
+                                  }
+                            } catch (e) {
+                                  console.error("微信登录请求失败", e);
+                                  wx.hideLoading();
+                                  wx.showToast({
+                                        title: '微信登录失败',
+                                        icon: 'error',
+                                  });
+                            }
+                      } else {
+                            console.log('登录失败！' + res.errMsg);
+                            wx.showToast({
+                                  title: '获取微信登录凭证失败',
+                                  icon: 'none',
+                            });
+                      }
+                },
+                fail: err => {
+                      console.error("wx.login调用失败", err);
+                      wx.showToast({
+                            title: '微信登录接口调用失败',
+                            icon: 'error',
+                      });
+                }
+          });
+          },
+          //获取授权的点击事件
+          shouquan() {            wx.requestSubscribeMessage({
                   tmplIds: ['6DGzsKqipoPxClnbkvwnxY9GqdXoLordLRdWTjJN1F0','XXmEjf37meLWQaEsOX6qkkufcVH-YKAL3cHyY9Lru0Q'], //这里填入我们生成的模板id
                   success(res) {          
                         console.log('授权成功', res)

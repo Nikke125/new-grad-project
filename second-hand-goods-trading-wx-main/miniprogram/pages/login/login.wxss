@@ -142,6 +142,12 @@
       letter-spacing: 2rpx;
       line-height: 42rpx;
 }
+
+.wx-login-btn {
+      margin-top: 20rpx;
+      background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%); /* WeChat-like gradient */
+}
+
 .top-bg {
       position: absolute;
       top: 0rpx;

@@ -7,8 +7,9 @@
       </view>
       <view class="info-text">
         <block wx:if="{{!userinfo}}">
-          <view class="nickname login-text" bindtap="go" data-go="/pages/login/quickLogin/quickLogin">点击登录</view>
+          <view class="nickname login-text" bindtap="wxLogin">点击微信一键登录</view>
           <view class="subtitle">一秒登录，体验所有功能</view>
+          <view class="account-login-tip" bindtap="go" data-go="/pages/login/login">账号密码登录</view>
         </block>
         <block wx:else>
           <view class="nickname-row">

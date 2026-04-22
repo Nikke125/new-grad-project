@@ -16,9 +16,20 @@ Page({
             adShow: false,
             list: [],
             picture_i: 0,
-            banner: [{
-              
-            }],
+            bannerList: [
+              {
+                id: 1,
+                imageUrl: 'https://picsum.photos/id/10/800/400'
+              },
+              {
+                id: 2,
+                imageUrl: 'https://picsum.photos/id/20/800/400'
+              },
+              {
+                id: 3,
+                imageUrl: 'https://picsum.photos/id/30/800/400'
+              }
+            ],
             indexTip: '欢迎光临二手交易平台',
             openid: app.openid
       },
@@ -430,41 +441,15 @@ Page({
                   url: '/pages/detail/detail?scene=' + e.currentTarget.dataset.id,
             })
       },
-      //获取轮播
+      //获取轮播 (已修改为使用静态海报)
       async getbanner() {
-        // console.log("getbanner")
-            let that = this;
-            let banner_=[{}];
-            try{
-              const res = await request('/idle/banner', {}, 'GET');
-              // console.log("/idle/banner",res);
-              for (let i=0; i < res.data.length; i++) {
-                if (!banner_[i]) {
-                  banner_.push({ id: 0, pictureList: "" });
-                }
-                const pictureList = JSON.parse(res.data[i].pictureList);
-                banner_[i].id = res.data[i].id;
-                banner_[i].pictureList = pictureList[0];
-              }
-              that.setData({
-                banner:banner_
-              })
-              // console.log("that.data.banner",that.data.banner);
-            }catch (error) {
-              console.error(error);
-            }
-
+        // 逻辑已迁移至 data.bannerList，此处仅保持结构兼容
       },
       //跳转轮播链接
       goweb(e) {
             console.log("e.currentTarget.dataset.banner.id: ",e.currentTarget.dataset.banner.id)
-            console.log("goweb_banner: ",this.data.banner);
-            wx.navigateTo({
-                  // url: '/pages/web/web?url=' + e.currentTarget.dataset.web.url,
-                  // url: '/pages/web/web?url=' + e.currentTarget.dataset.banner.id,
-                  url: '/pages/detail/detail?scene=' + e.currentTarget.dataset.banner.id,
-
-            })
+            console.log("goweb_banner: ",this.data.bannerList);
+            // 这里可以根据实际需要配置跳转逻辑，目前暂时保留控制台输出
       },
       onShareAppMessage() {
             return {

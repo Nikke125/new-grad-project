@@ -1,6 +1,18 @@
 // request.js
 function request(url, data = {}, method = 'GET') {
-  const cookies = wx.getStorageSync('cookies'); // 从本地缓存中获取 Cookie
+  const shUserId = wx.getStorageSync('shUserId'); // 从本地缓存中获取 shUserId
+  let cookies = wx.getStorageSync('cookies'); // 从本地缓存中获取其他 Cookie
+
+  // 拼接 shUserId 到 Cookie 字符串
+  if (shUserId) {
+    const userIdCookie = `shUserId=${shUserId}`;
+    if (cookies) {
+      cookies = `${userIdCookie}; ${cookies}`;
+    } else {
+      cookies = userIdCookie;
+    }
+  }
+
   return new Promise((resolve, reject) => {
     // wx.showLoading({
     //   title: '加载中...'
@@ -12,7 +24,7 @@ function request(url, data = {}, method = 'GET') {
       method: method,
       header: {
         'Content-Type': 'application/json',
-        'Cookie': cookies, // 手动添加 Cookie 到请求头
+        'Cookie': cookies || '', // 手动添加 Cookie 到请求头，如果为空则设为''
       },
       success: (res) => {
         // wx.hideLoading();

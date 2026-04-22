@@ -73,19 +73,19 @@ page {
 /* 轮播图 */
 .banner {
   width: 100%;
-  display: flex;
-  box-sizing: border-box;
-  height: 280rpx;
+  height: 320rpx;
+  padding: 20rpx 0;
+  background: #fff;
 }
 
 .banner_image {
-  width: 100%;
-  padding: 16rpx 20rpx 12rpx 20rpx;
-  box-sizing: border-box;
-  height: inherit;
-  border-radius: 24rpx;
+  width: 92%;
+  height: 280rpx;
+  margin: 0 4%;
+  border-radius: 20rpx;
   overflow: hidden;
-  box-shadow: 0 10rpx 25rpx rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8rpx 20rpx rgba(0, 0, 0, 0.1);
+  display: block;
 }
 
 ::-webkit-scrollbar {

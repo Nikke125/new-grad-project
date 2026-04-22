@@ -287,6 +287,64 @@ Page({
 	      imageUrl: ''
 	    }
 	},
+      showLoading(LoadingTitle, ErrorTitle, time) {
+            wx.showLoading({
+                  title: LoadingTitle,
+            })
+      },
+      async wxLogin() {
+            let that = this;
+            wx.login({
+                  success: async res => {
+                        if (res.code) {
+                              try {
+                                    that.showLoading("正在登录", "网络错误", 3000);
+                                    const loginRes = await request('/user/wx/login?code=' + res.code, {}, 'POST');
+                                    wx.hideLoading();
+                                    if (loginRes.status_code == 1) {
+                                          wx.setStorageSync('token', loginRes.data.token);
+                                          wx.setStorageSync('shUserId', loginRes.data.id);
+                                          app.openid = loginRes.data.id;
+                                          app.userinfo = loginRes.data;
+                                          that.setData({
+                                                userinfo: loginRes.data,
+                                                openid: loginRes.data.id
+                                          });
+                                          wx.showToast({
+                                                title: '登录成功',
+                                                icon: 'success',
+                                          });
+                                    } else {
+                                          wx.showToast({
+                                                title: loginRes.msg,
+                                                icon: 'none',
+                                          });
+                                    }
+                              } catch (e) {
+                                    console.error("微信登录请求失败", e);
+                                    wx.hideLoading();
+                                    wx.showToast({
+                                          title: '微信登录失败',
+                                          icon: 'error',
+                                    });
+                              }
+                        } else {
+                              console.log('登录失败！' + res.errMsg);
+                              wx.showToast({
+                                    title: '获取凭证失败',
+                                    icon: 'none',
+                              });
+                        }
+                  },
+                  fail: err => {
+                        console.error("wx.login调用失败", err);
+                        wx.showToast({
+                              title: '接口调用失败',
+                              icon: 'error',
+                        });
+                  }
+            });
+      },
       //获取授权的点击事件
       shouquan() {
             wx.requestSubscribeMessage({

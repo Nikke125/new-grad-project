@@ -56,6 +56,13 @@ page {
   margin-top: 12rpx;
 }
 
+.account-login-tip {
+  font-size: 22rpx;
+  color: #c0c4cc;
+  margin-top: 20rpx;
+  text-decoration: underline;
+}
+
 .nickname-row {
   display: flex;
   flex-direction: row;

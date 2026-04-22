@@ -18,6 +18,7 @@
 	<!--底部确认-->
 	<button class="confirm" open-type='getUserInfo' bindgetuserinfo="check">登录</button>
   <button class="confirm" open-type='getUserInfo' bindgetuserinfo="toRegister">注册</button>
+  <button class="confirm wx-login-btn" bindtap="wxLogin">微信一键登录</button>
 	<!-- <view class="shen_title">
 		<image class="about" src="/images/about.png" />使用申明
 	</view> -->
