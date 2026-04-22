@@ -34,3 +34,4 @@ build/
 src/main/resources/static/
 # 忽略包含敏感密钥的开发配置文件
 application-dev.properties
+application-test.properties

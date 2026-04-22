@@ -33,21 +33,52 @@ public class UserWXServiceImpl implements UserWXService {
     private UserWXDao userWXDao;
 
 
-    public String getWeChatOpenId(String code) throws Exception {
-        String url = String.format(
-        "https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code",
+//     public String getWeChatOpenId(String code) throws Exception {
+//         String url = String.format(
+//         "https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code",
+//                 wxAppId, wxSecret, code
+//         );
+// //        System.out.println("请求URL: " + url); // 打印完整URL
+//         CloseableHttpClient client = HttpClients.createDefault();
+//         HttpGet request = new HttpGet(url);
+//         String response = EntityUtils.toString(client.execute(request).getEntity());
+//         JSONObject json = JSONObject.parseObject(response);
+// //        System.out.println("response: "+response);
+// //        System.out.println("openid: "+json.getString("openid"));
+//         return json.getString("openid"); // 可能包含session_key
+//     }
+public String getWeChatOpenId(String code) throws Exception {
+        String URL = String.format(
+                "https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code",
                 wxAppId, wxSecret, code
         );
-//        System.out.println("请求URL: " + url); // 打印完整URL
-        CloseableHttpClient client = HttpClients.createDefault();
-        HttpGet request = new HttpGet(url);
-        String response = EntityUtils.toString(client.execute(request).getEntity());
-        JSONObject json = JSONObject.parseObject(response);
-//        System.out.println("response: "+response);
-//        System.out.println("openid: "+json.getString("openid"));
-        return json.getString("openid"); // 可能包含session_key
-    }
+        // 🚨 检查点 1：看看你从配置文件里读出来的 appId 是不是 null！
+        System.out.println("🚨 准备发送给微信的 AppID 是: " + wxAppId);
+        System.out.println("🚨 准备发送给微信的 Secret 是: " + wxSecret);
+        System.out.println("🚨 完整的请求URL： " + URL);
 
+        try {
+            CloseableHttpClient client = HttpClients.createDefault();
+            HttpGet request = new HttpGet(URL);
+            String response = EntityUtils.toString(client.execute(request).getEntity());
+            
+            // 🚨 检查点 2：必须把微信的返回结果印出来！
+            System.out.println("🚨 微信官方返回的内容是：" + response);
+            
+            JSONObject json = JSONObject.parseObject(response);
+            String openid = json.getString("openid");
+            
+            if (openid == null) {
+                System.out.println("🚨 糟糕，返回的 JSON 里没有 openid！可能是 errcode: " + json.getString("errcode"));
+            }
+            
+            return openid;
+        } catch (Exception e) {
+            System.out.println("🚨 极其严重的错误：在请求微信接口时代码直接崩溃了！");
+            e.printStackTrace();
+            throw e;
+        }
+    }
 
     public UserModel getWeChatUser(UserModel userModel) {
         UserModel userModel_=userWXDao.getWXUserToOpenid(userModel.getWxOpenid());
