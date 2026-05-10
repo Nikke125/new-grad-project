@@ -26,4 +26,12 @@ public interface OrderDao {
     int updateByPrimaryKeySelective(OrderModel record);
 
     int updateByPrimaryKey(OrderModel record);
+
+    int countAllOrder();
+
+    java.math.BigDecimal sumCompletedOrderPrice();
+
+    List<java.util.Map<String, Object>> countOrdersByLast7Days();
+
+    List<java.util.Map<String, Object>> countIdleItemByCategory();
 }

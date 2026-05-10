@@ -304,6 +304,27 @@ const api = {
             method: 'get',
             params: query
         });
+    },
+    getStatisticsOverview(query) {
+        return request({
+            url: '/admin/statistics/overview',
+            method: 'get',
+            params: query
+        });
+    },
+    getOrdersLast7Days(query) {
+        return request({
+            url: '/admin/statistics/orders-last-7-days',
+            method: 'get',
+            params: query
+        });
+    },
+    getCategoryStatistics(query) {
+        return request({
+            url: '/admin/statistics/category',
+            method: 'get',
+            params: query
+        });
     }
 };
 

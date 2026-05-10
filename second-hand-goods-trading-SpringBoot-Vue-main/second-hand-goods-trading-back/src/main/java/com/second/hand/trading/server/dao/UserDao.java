@@ -36,4 +36,6 @@ public interface UserDao {
 
     int updatePassword(@Param("newPassword") String newPassword,
                        @Param("oldPassword") String oldPassword,@Param("id") Long id);
+
+    int countAllUser();
 }

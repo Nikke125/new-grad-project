@@ -147,4 +147,7 @@
     set user_password = #{newPassword,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT} and user_password=#{oldPassword,jdbcType=VARCHAR}
   </update>
+  <select id="countAllUser" resultType="int">
+    select count(*) from sh_user
+  </select>
 </mapper>

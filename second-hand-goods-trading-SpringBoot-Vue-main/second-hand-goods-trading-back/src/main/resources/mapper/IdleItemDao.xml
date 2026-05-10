@@ -73,6 +73,19 @@
     SELECT id, picture_list AS pictureList
     FROM sh_idle_item
   </select>
+  <select id="countAllIdleItem" resultType="int">
+    select count(*) from sh_idle_item where idle_status != 0
+  </select>
+  <select id="countIdleItemByLabelReturnData" resultType="int">
+    select count(*) from sh_idle_item where idle_label = #{label} and idle_status != 0
+  </select>
+  <select id="countIdleItemByCategory" resultType="java.util.Map">
+    SELECT idle_label as label, COUNT(*) as value
+    FROM sh_idle_item
+    WHERE idle_status != 0
+    GROUP BY idle_label
+    ORDER BY value DESC
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from sh_idle_item
     where id = #{id,jdbcType=BIGINT}

@@ -35,6 +35,10 @@
                                     <i class="el-icon-s-custom"></i>
                                     <span slot="title">用户管理</span>
                                 </el-menu-item>
+                                <el-menu-item index="4" >
+                                    <i class="el-icon-data-analysis"></i>
+                                    <span slot="title">数据统计</span>
+                                </el-menu-item>
                             </el-menu>
                         </el-col>
                     </el-aside>
@@ -42,6 +46,7 @@
                         <IdleGoods v-if="mode == 1"></IdleGoods>
                         <orderList v-if="mode == 2"></orderList>
                         <userList v-if="mode == 3"></userList>
+                        <Dashboard v-if="mode == 4"></Dashboard>
                     </el-main>
                 </div>
             </el-container>
@@ -57,6 +62,7 @@
     import IdleGoods from '../common/IdleGoods.vue'
     import orderList from '../common/orderList.vue'
     import userList from '../common/userList.vue'
+    import Dashboard from '../Dashboard.vue'
     export default {
         name: "platform-admin",
         components: {
@@ -64,6 +70,7 @@
             IdleGoods,
             orderList,
             userList,
+            Dashboard
         },
         data(){
             return {

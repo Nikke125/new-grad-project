@@ -39,6 +39,16 @@
   <select id="countAllOrder" resultType="int">
     select  count(*) from sh_order
   </select>
+  <select id="sumCompletedOrderPrice" resultType="java.math.BigDecimal">
+    select COALESCE(sum(order_price), 0) from sh_order where order_status = 2
+  </select>
+  <select id="countOrdersByLast7Days" resultType="java.util.Map">
+    SELECT DATE(create_time) as date, COUNT(*) as count
+    FROM sh_order
+    WHERE create_time >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+    GROUP BY DATE(create_time)
+    ORDER BY date ASC
+  </select>
   <select id="findOrderByIdleIdList" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

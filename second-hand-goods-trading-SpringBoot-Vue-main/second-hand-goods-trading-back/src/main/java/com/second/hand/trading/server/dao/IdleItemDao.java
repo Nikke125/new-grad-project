@@ -36,4 +36,10 @@ public interface IdleItemDao {
     List<IdleItemModel> findIdleByList(List<Long> idList);
 
     List<IdleItemModel> findBanner();
+
+    int countAllIdleItem();
+
+    int countIdleItemByLabelReturnData(int label);
+
+    List<java.util.Map<String, Object>> countIdleItemByCategory();
 }

@@ -181,4 +181,28 @@ public class AdminController {
         return ResultVo.fail(ErrorMsg.SYSTEM_ERROR);
     }
 
+    @GetMapping("statistics/overview")
+    public ResultVo getStatisticsOverview(HttpSession session){
+        if(session.getAttribute("admin")==null){
+            return ResultVo.fail(ErrorMsg.COOKIE_ERROR);
+        }
+        return ResultVo.success(adminService.getStatisticsOverview());
+    }
+
+    @GetMapping("statistics/orders-last-7-days")
+    public ResultVo getOrdersLast7Days(HttpSession session){
+        if(session.getAttribute("admin")==null){
+            return ResultVo.fail(ErrorMsg.COOKIE_ERROR);
+        }
+        return ResultVo.success(adminService.getOrdersLast7Days());
+    }
+
+    @GetMapping("statistics/category")
+    public ResultVo getCategoryStatistics(HttpSession session){
+        if(session.getAttribute("admin")==null){
+            return ResultVo.fail(ErrorMsg.COOKIE_ERROR);
+        }
+        return ResultVo.success(adminService.getCategoryStatistics());
+    }
+
 }
