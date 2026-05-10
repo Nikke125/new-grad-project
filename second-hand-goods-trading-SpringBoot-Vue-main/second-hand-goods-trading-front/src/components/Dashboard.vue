@@ -402,18 +402,18 @@ export default {
   color: #fff;
 }
 
-/* 各卡片渐变色 */
+/* 各卡片渐变色 - 低饱和度清新渐变 */
 .users-card {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #5EC9A8 0%, #3DB89A 100%);
 }
 .products-card {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: linear-gradient(135deg, #7DC9E8 0%, #5BB8DB 100%);
 }
 .orders-card {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  background: linear-gradient(135deg, #A5D4F0 0%, #85C5E8 100%);
 }
 .transaction-card {
-  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  background: linear-gradient(135deg, #7ECBA1 0%, #5EBB87 100%);
 }
 
 .chart-card {

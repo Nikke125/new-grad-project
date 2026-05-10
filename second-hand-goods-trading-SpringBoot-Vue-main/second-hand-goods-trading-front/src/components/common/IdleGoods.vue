@@ -75,6 +75,10 @@
                 <template slot-scope="scope">
                     <el-button
                             size="mini"
+                            type="success"
+                            @click="relistGoods(scope.$index)">重新上架</el-button>
+                    <el-button
+                            size="mini"
                             type="danger"
                             @click="deleteGoods(scope.$index)">永久删除</el-button>
                 </template>
@@ -160,6 +164,21 @@
                     console.log(e)
                 })
             },
+            relistGoods(i){
+                this.$api.updateGoods({
+                    id: this.OfflineGoods[i].id,
+                    status:1
+                }).then(res => {
+                    if(res.status_code==1){
+                        this.$message.success('上架成功');
+                        this.getOfflineGoods();
+                    }else {
+                        this.$message.error(res.msg)
+                    }
+                }).catch(e => {
+                    console.log(e)
+                })
+            },
             getOnlineGoods(){
                 this.$api.getGoods({
                     status:1,
@@ -198,17 +217,35 @@
 </script>
 
 <style scoped>
-    .main-border{
-        background-color: #FFF;
-        padding: 10px 30px;
-        box-shadow: 0 1px 15px -6px rgba(0,0,0,.5);
-        border-radius: 5px;
+    .main-border {
+        background-color: #FFFFFF;
+        padding: 20px 24px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        border-radius: 12px;
     }
     .block {
         display: flex;
-        justify-content:center;
-        padding-top: 15px;
-        padding-bottom: 10px;
+        justify-content: center;
+        padding-top: 20px;
+        padding-bottom: 16px;
         width: 100%;
+    }
+    /* 菜单样式优化 */
+    .el-menu-demo {
+        border-bottom: none;
+        margin-bottom: 16px;
+    }
+    .el-menu-item {
+        border-radius: 8px;
+        margin-right: 8px;
+        height: 42px;
+        line-height: 42px;
+    }
+    .el-menu-item:hover {
+        background-color: #F0F9F4;
+    }
+    .el-menu-item.is-active {
+        color: #2EB872;
+        border-bottom: 2px solid #2EB872;
     }
 </style>

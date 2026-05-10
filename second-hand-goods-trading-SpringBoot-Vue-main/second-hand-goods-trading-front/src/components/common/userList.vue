@@ -296,24 +296,38 @@
 </script>
 
 <style scoped>
-    .main-border{
-        background-color: #FFF;
-        padding: 10px 30px;
-        box-shadow: 0 1px 15px -6px rgba(0,0,0,.5);
-        border-radius: 5px;
+    .main-border {
+        background-color: #FFFFFF;
+        padding: 20px 24px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        border-radius: 12px;
     }
     .block {
         display: flex;
-        justify-content:center;
-        padding-top: 15px;
-        padding-bottom: 10px;
+        justify-content: center;
+        padding-top: 20px;
+        padding-bottom: 16px;
         width: 100%;
     }
-    .addAdminButton{
-        display:flex;
+    .addAdminButton {
+        display: flex;
         justify-content: flex-end;
         align-items: center;
         height: 60px;
         outline: none;
+    }
+    /* 菜单样式优化 */
+    .el-menu-demo {
+        border-bottom: none;
+        margin-bottom: 16px;
+    }
+    .el-menu-item {
+        border-radius: 8px;
+        margin-right: 8px;
+        height: 42px;
+        line-height: 42px;
+    }
+    .el-menu-item:hover {
+        background-color: #F0F9F4;
     }
 </style>
